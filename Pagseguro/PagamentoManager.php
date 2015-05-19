@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use BFOS\PagseguroBundle\Utils\Browser;
-use \BFOS\PagseguroBundle\Entity\Pagamento;
+use BFOS\PagseguroBundle\Entity\Pagamento;
 use BFOS\PagseguroBundle\Entity\PagamentoItem;
 use BFOS\PagseguroBundle\Entity\NotificacaoTransacao;
 use BFOS\PagseguroBundle\Entity\Transacao;

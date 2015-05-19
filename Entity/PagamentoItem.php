@@ -45,7 +45,7 @@ class PagamentoItem
      * @ORM\Column(name="description", type="string", length=100)
      *
      * @Assert\NotBlank( )
-     * @Assert\MaxLength(100)
+     * @Assert\Length(max=100)
      */
     private $description;
 
@@ -80,8 +80,7 @@ class PagamentoItem
      * @ORM\Column(name="quantity", type="integer")
      *
      * @Assert\NotBlank()
-     * @Assert\Max(limit=999)
-     * @Assert\Min(limit="1")
+     * @Assert\Range(min = 1, max=999)
      */
     private $quantity;
 
