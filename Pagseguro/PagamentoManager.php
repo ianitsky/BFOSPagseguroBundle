@@ -36,7 +36,7 @@ class PagamentoManager
     function __construct(ContainerInterface $container)
     {
         $this->container  = $container;
-        $this->em = $container->get('doctrine')->getEntityManager();
+        $this->em = $container->get('doctrine')->getManager();
         $this->rpagamento = $container->get('doctrine')->getRepository('BFOSPagseguroBundle:Pagamento');
         $this->rtransacao = $container->get('doctrine')->getRepository('BFOSPagseguroBundle:Transacao');
         $this->logger     = $container->get('logger');
@@ -388,7 +388,7 @@ class PagamentoManager
         if(!$t->getItemCount()){
             $t->setItemCount($request->request->get('NumItens'));
         }
-        $this->container->get('doctrine')->getEntityManager()->persist($t);
+        $this->container->get('doctrine')->getManager()->persist($t);
         if(count($t->getItens())==0){
             $shipping_cost = 0;
             $extra_amount = 0;
@@ -399,21 +399,21 @@ class PagamentoManager
                 $ti->setQuantity($this->getFromRequest("ProdQuantidade_$i", $request));
                 $ti->setAmount(str_replace(',', '.',$this->getFromRequest("ProdValor_$i", $request)));
                 $t->addItem($ti);
-                $this->container->get('doctrine')->getEntityManager()->persist($ti);
+                $this->container->get('doctrine')->getManager()->persist($ti);
                 $shipping_cost += str_replace(',', '.',$this->getFromRequest("ProdFrete_$i", $request));
                 $extra_amount += str_replace(',', '.',$this->getFromRequest("ProdExtras_$i", $request));
             }
             $t->setShippingCost($shipping_cost);
             $t->setExtraAmount($extra_amount);
         }
-        $this->container->get('doctrine')->getEntityManager()->persist($t);
+        $this->container->get('doctrine')->getManager()->persist($t);
 
         $situacao = new \BFOS\PagseguroBundle\Entity\TransacaoSituacao();
         $situacao->setSituacao($this->getFromRequest('StatusTransacao', $request));
         $t->addSituacao($situacao);
-        $this->container->get('doctrine')->getEntityManager()->persist($situacao);
+        $this->container->get('doctrine')->getManager()->persist($situacao);
 
-        $this->container->get('doctrine')->getEntityManager()->flush();
+        $this->container->get('doctrine')->getManager()->flush();
 
         $event = new \BFOS\PagseguroBundle\Event\RetornoAutomaticoEvent($t);
         $this->container->get('event_dispatcher')->dispatch(\BFOS\PagseguroBundle\Event\PagseguroEvents::onRetornoAutomatico, $event);

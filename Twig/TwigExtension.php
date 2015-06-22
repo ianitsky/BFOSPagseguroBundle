@@ -41,7 +41,7 @@ class TwigExtension extends \Twig_Extension
     public function __construct(Container $container)
     {
         $this->container = $container;
-        $this->em = $container->get('doctrine')->getEntityManager();
+        $this->em = $container->get('doctrine')->getManager();
     }
 
 
