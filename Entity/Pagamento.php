@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use BFOS\PagseguroBundle\Entity\PagamentoItem;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\ExecutionContext;
+use Symfony\Component\Validator\Context\LegacyExecutionContext;
 
 /**
  * BFOS\PagseguroBundle\Entity\Pagamento
@@ -55,8 +55,7 @@ class Pagamento
      * @var string $reference
      *
      * @ORM\Column(name="reference", type="string", length=200, nullable=true)
-     *
-     * @Assert\MaxLength(200)
+     * @Assert\Length(max = 200)
      * @Assert\NotBlank()
      */
     private $reference;
@@ -74,7 +73,7 @@ class Pagamento
      *
      * @Assert\NotBlank()
      * @Assert\Email()
-     * @Assert\MaxLength(60)
+     * @Assert\Length(max = 60)
      */
     private $email;
 
@@ -87,9 +86,7 @@ class Pagamento
      * Formato: uma sequência de 32 caracteres.
      *
      * @var string $token
-     *
-     * @Assert\MaxLength(32)
-     * @Assert\MinLength(limit=32)
+     * @Assert\Length(max = 32)
      * @Assert\NotBlank()
      */
     private $token;
@@ -103,9 +100,7 @@ class Pagamento
      * @var string $retornoToken
      *
      * @ORM\Column(name="retorno_token", type="string", length=32, nullable=true)
-     *
-     * @Assert\MaxLength(32)
-     * @Assert\MinLength(limit=32)
+     * @Assert\Length(max = 32)
      */
     private $retornoToken;
 
@@ -152,7 +147,7 @@ class Pagamento
      * @ORM\Column(name="senderEmail", type="string", length=60, nullable=true)
      *
      * @Assert\Email()
-     * @Assert\MaxLength(60)
+     * @Assert\Length(max = 60)
      */
     private $senderEmail;
 
@@ -168,7 +163,7 @@ class Pagamento
      *
      * @ORM\Column(name="senderName", type="string", length=50, nullable=true)
      *
-     * @Assert\MaxLength(50)
+     * @Assert\Length(max = 50)
      * @Assert\Regex(pattern="/^.*(?=.*\s)(?=.*[a-zA-Z]).*$/", message="O nome tem que conter um espaço, caracterizando o nome completo..")
      */
     private $senderName;
@@ -185,7 +180,7 @@ class Pagamento
      *
      * @ORM\Column(name="senderAreaCode", type="integer", nullable=true)
      *
-     * @Assert\Max(limit=99)
+     * @Assert\Range(max=99)
      *
      */
     private $senderAreaCode;
@@ -202,18 +197,18 @@ class Pagamento
      *
      * @ORM\Column(name="senderPhone", type="string", length=8, nullable=true)
      *
-     * @Assert\Max(limit=99999999)
+     * @Assert\Range(max=99999999)
      */
     private $senderPhone;
 
     /**
      * Valor total do frete.
-
-    Informa o valor total de frete do pedido. Caso este valor seja especificado, o PagSeguro irá assumi-lo como valor do frete e não fará nenhum cálculo referente aos pesos e valores de entrega dos itens.
-
-    Presença: Opcional.
-    Tipo: Número.
-    Formato: Decimal, com duas casas decimais separadas por ponto (p.e, 1234.56), maior que 0.00 e menor ou igual a 9999999.00.
+     *
+     * Informa o valor total de frete do pedido. Caso este valor seja especificado, o PagSeguro irá assumi-lo como valor do frete e não fará nenhum cálculo referente aos pesos e valores de entrega dos itens.
+     *
+     * Presença: Opcional.
+     * Tipo: Número.
+     * Formato: Decimal, com duas casas decimais separadas por ponto (p.e, 1234.56), maior que 0.00 e menor ou igual a 9999999.00.
      *
      * @var float $shippingCost
      *
@@ -225,10 +220,10 @@ class Pagamento
      * Informa o tipo de frete a ser usado para o envio do produto. Esta informação é usada pelo PagSeguro para calcular, junto aos Correios,
      * o valor do frete a partir do peso dos itens. A tabela abaixo descreve os valores aceitos e seus significados:
      *
-     * Código	Significado
-     *      1	Encomenda normal (PAC).
-     *      2	SEDEX
-     *      3	Tipo de frete não especificado.
+     * Código   Significado
+     *      1   Encomenda normal (PAC).
+     *      2   SEDEX
+     *      3   Tipo de frete não especificado.
      *
      * Presença: Opcional.
      * Tipo: Número.
@@ -270,8 +265,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressState", type="string", length=2, nullable=true)
      *
-     * @Assert\MaxLength(2)
-     * @Assert\MinLength(limit=2)
+     * @Assert\Length(max = 2)
      */
     private $shippingAddressState;
 
@@ -287,7 +281,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressCity", type="string", length=80, nullable=true)
      *
-     * @Assert\MaxLength(80)
+     * @Assert\Length(max = 80)
      */
     private $shippingAddressCity;
 
@@ -303,7 +297,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressPostalCode", type="string", length=8, nullable=true)
      *
-     * @Assert\Max(limit=99999999)
+     * @Assert\Range(max=99999999)
      */
     private $shippingAddressPostalCode;
 
@@ -319,7 +313,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressDistrict", type="string", length=80, nullable=true)
      *
-     * @Assert\MaxLength(80)
+     * @Assert\Length(max = 80)
      */
     private $shippingAddressDistrict;
 
@@ -335,7 +329,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressStreet", type="string", length=120, nullable=true)
      *
-     * @Assert\MaxLength(120)
+     * @Assert\Length(max = 120)
      */
     private $shippingAddressStreet;
 
@@ -351,7 +345,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressNumber", type="string", length=10, nullable=true)
      *
-     * @Assert\MaxLength(10)
+     * @Assert\Length(max = 10)
      */
     private $shippingAddressNumber;
 
@@ -367,7 +361,7 @@ class Pagamento
      *
      * @ORM\Column(name="shippingAddressComplement", type="string", length=120, nullable=true)
      *
-     * @Assert\MaxLength(120)
+     * @Assert\Length(max = 120)
      */
     private $shippingAddressComplement;
 
@@ -397,7 +391,7 @@ class Pagamento
      *
      * @ORM\Column(name="redirectURL", type="string", length=1000, nullable=true)
      *
-     * @Assert\MaxLength(100)
+     * @Assert\Length(max = 100)
      * @Assert\Url()
      */
     private $redirectURL;
@@ -414,7 +408,7 @@ class Pagamento
      *
      * @ORM\Column(name="maxUses", type="integer", nullable=true)
      *
-     * @Assert\Min(limit="1")
+     * @Assert\Range(min = 1)
      */
     private $maxUses;
 
@@ -430,7 +424,7 @@ class Pagamento
      *
      * @ORM\Column(name="maxAge", type="integer", nullable=true)
      *
-     * @Assert\Min(limit="30")
+     * @Assert\Range(max = 30)
      */
     private $maxAge;
 
@@ -1197,7 +1191,7 @@ class Pagamento
     }
 
 
-    public function checaSeItensSaoValidos(ExecutionContext $context){
+    public function checaSeItensSaoValidos(LegacyExecutionContext $context){
         if(count($this->getItens())==0){
             $context->addViolationAtSubPath('itens', 'É preciso pelo menos um item no Pagamento.');
         }
